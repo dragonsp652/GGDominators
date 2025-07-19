@@ -1,0 +1,208 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Page</title>
+<link rel="stylesheet" href="2style.css">
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet">
+ </head>
+ <body>
+  
+  <header>
+    <div>
+      <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+         <div class="logo"></div>
+      </a>
+      <nav>
+        <ul class="sidebar">
+            <li onclick="hideSidebar()"><a href="#"> <svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px" fill="#c9c9c9"><path d="m480-444.62-209.69 209.7q-7.23 7.23-17.5 7.42-10.27.19-17.89-7.42-7.61-7.62-7.61-17.7 0-10.07 7.61-17.69L444.62-480l-209.7-209.69q-7.23-7.23-7.42-17.5-.19-10.27 7.42-17.89 7.62-7.61 17.7-7.61 10.07 0 17.69 7.61L480-515.38l209.69-209.7q7.23-7.23 17.5-7.42 10.27-.19 17.89 7.42 7.61 7.62 7.61 17.7 0 10.07-7.61 17.69L515.38-480l209.7 209.69q7.23 7.23 7.42 17.5.19 10.27-7.42 17.89-7.62 7.61-17.7 7.61-10.07 0-17.69-7.61L480-444.62Z"/></svg></a></li>
+            <li><a href="http://127.0.0.1:5500/index2.html">Home</a></li>
+            <li><a href="http://127.0.0.1:5500/index3.html#">Review</a></li>
+            <li><a href="http://127.0.0.1:5500/index4.html">Gallery</a></li>
+            <li><a href="http://127.0.0.1:5500/index.html">Login</a></li>
+        </ul>
+        <ul>
+            <li><a href="#">GGDominators</a></li>
+            <li class="hideOnMoblie"><a href="http://127.0.0.1:5500/index2.html">Home</a></li>
+            <li class="hideOnMoblie"><a href="http://127.0.0.1:5500/index3.html">Review</a></li>
+            <li class="hideOnMoblie"><a href="http://127.0.0.1:5500/index4.html">Gallery</a></li>
+            <li class="hideOnMoblie"><a href="http://127.0.0.1:5500/index.html">Login</a></li>
+            <li class="menu-button" onclick=showSiderbar()><a href="#"><svg xmlns="http://www.w3.org/200/svg" height="26" viewBox="0 96 960 960" width="26"><path d="M120 816v-60h720v60H120Zm0-210v-60h720v60h120Z"></svg></a></li>
+        </ul>
+      </nav>
+    </div>
+</header>
+<script>
+    function showSiderbar(){
+        const sidebar = document.querySelector('.sidebar')
+        sidebar.style.display = 'flex'
+    }
+    function hideSidebar(){
+        const sidebar = document.querySelector('.sidebar')
+        sidebar.style.display = 'none'
+    }
+</script>
+
+<div class="banner">
+  <div class="slider" style="--quantity: 10">
+      <div class="item" style="--position: 1"><img src="image/dragon_1.jpg" alt=""></div>
+      <div class="item" style="--position: 2"><img src="image/dragon_2.jpg" alt=""></div>
+      <div class="item" style="--position: 3"><img src="image/dragon_3.jpg" alt=""></div>
+      <div class="item" style="--position: 4"><img src="image/dragon_4.jpg" alt=""></div>
+      <div class="item" style="--position: 5"><img src="image/dragon_5.jpg" alt=""></div>
+      <div class="item" style="--position: 6"><img src="image/dragon_6.jpg" alt=""></div>
+      <div class="item" style="--position: 7"><img src="image/dragon_7.jpg" alt=""></div>
+      <div class="item" style="--position: 8"><img src="image/dragon_8.jpg" alt=""></div>
+      <div class="item" style="--position: 9"><img src="image/dragon_9.jpg" alt=""></div>
+      <div class="item" style="--position: 10"><img src="image/dragon_10.jpg" alt=""></div>
+  </div>
+  <div class="content">
+      <h1 data-content="GGDominator">
+          GGDominators
+      </h1>
+      <div class="author">
+          <h2>Welcome</h2>
+          <p><b>My Web</b></p>
+          <p>
+              This is my Gaming web site for those people who want to play game.
+          </p>
+      </div>
+      <div class="model"></div>
+  </div>
+</div>
+   
+<section>
+  <div id="preloader">
+    <div class="loader"></div>
+    <p class="loading-text">Please wait, loading...</p>
+  </div>
+  
+  <script>
+    const preloader = document.getElementById("preloader");
+  
+    // Hide preloader after page load
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        hidePreloader();
+      }, 2000); // 5 seconds delay after page load
+    });
+  
+    // Fallback: Hide after 15 seconds max
+    setTimeout(() => {
+      hidePreloader();
+    }, 12000);
+  
+    function hidePreloader() {
+      if (preloader.style.display !== "none") {
+        preloader.style.opacity = "0";
+        preloader.style.pointerEvents = "none";
+        setTimeout(() => {
+          preloader.style.display = "none";
+        }, 1500);
+      }
+    }
+  </script>
+</section>
+<hr>
+
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="flex flex-col text-center w-full mb-20">
+      <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900 bob">Master Cleanse Reliac Heirloom</h1>
+      <p class="lg:w-2/3 mx-auto leading-relaxed text-base bob1">Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical gentrify, subway tile poke farm-to-table. Franzen you probably haven't heard of them man bun deep jianbing selfies heirloom prism food truck ugh squid celiac humblebrag.</p>
+    </div>
+    <div class="flex flex-wrap -m-4 text-center">
+      <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+        <div class="bob2">
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="text-indigo-500 w-12 h-12 mb-3 inline-block" viewBox="0 0 24 24">
+            <path d="M8 17l4 4 4-4m-4-5v9"></path>
+            <path d="M20.88 18.09A5 5 0 0018 9h-1.26A8 8 0 103 16.29"></path>
+          </svg>
+          <h2 class=" bob2a">5</h2>
+          <p class="leading-relaxed">created</p>
+        </div>
+      </div>
+      <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+        <div class="bob3">
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="text-indigo-500 w-12 h-12 mb-3 inline-block" viewBox="0 0 24 24">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
+          </svg>
+          <h2 class="title-font font-medium text-3xl text-gray-900">1.3K</h2>
+          <p class="leading-relaxed">Users</p>
+        </div>
+      </div>
+      <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+        <div class="bob4">
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="text-indigo-500 w-12 h-12 mb-3 inline-block" viewBox="0 0 24 24">
+            <path d="M3 18v-6a9 9 0 0118 0v6"></path>
+            <path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"></path>
+          </svg>
+          <h2 class="title-font font-medium text-3xl text-gray-900">74</h2>
+          <p class="leading-relaxed">Files</p>
+        </div>
+      </div>
+      <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+        <div class="bob5">
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="text-indigo-500 w-12 h-12 mb-3 inline-block" viewBox="0 0 24 24">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          <h2 class="title-font font-medium text-3xl text-gray-900">46</h2>
+          <p class="leading-relaxed">Places</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="wxw">
+<div class="main">
+<button class="wxw1"><a href="http://127.0.0.1:5500/index5.html">Start</a></button>
+</div>
+
+
+</section>
+
+  <footer class="text-gray-600 body-font">
+    <div class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
+      <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
+        <span class="ml-3 text-xl">GGDominators</span>
+      </a>
+      <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">© 2025 GGDominators —
+        <a href="#" rel="noopener noreferrer" target="_blank">@GGDominators</a>
+      </p>
+      <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
+        <a class="text-gray-500">
+          <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+            <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+          </svg>
+        </a>
+        <a class="ml-3 text-gray-500">
+          <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+            <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+          </svg>
+        </a>
+        <a class="ml-3 text-gray-500">
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+            <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"></path>
+          </svg>
+        </a>
+        <a class="ml-3 text-gray-500">
+          <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0" class="w-5 h-5" viewBox="0 0 24 24">
+            <path stroke="none" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+            <circle cx="4" cy="4" r="2" stroke="none"></circle>
+          </svg>
+        </a>
+      </span>
+    </div>
+  </footer>
+
+
+  
+ </body>
+ </html>
