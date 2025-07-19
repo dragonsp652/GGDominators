@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="brand-logo">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9de3235c-33f8-4c06-929e-f38534764100.png" alt="AuthFlow logo - a blue shield with a key symbol representing security and authentication" />
+                </div>
+                <h1>Welcome to AuthFlow</h1>
+                <p>Secure authentication for your digital world</p>
+            </div>
+            <!--select section-->
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="login-tab">Login</div>
+                <div class="auth-tab" id="register-tab">Register</div>
+            </div>
+            <!--Detail section-->
+            <div class="auth-body">
+                <form id="login-form" class="auth-form active">
+                    <div class="form-group float-label">
+                        <input type="email" id="login-email" class="form-input" placeholder=" " required>
+                        <label for="login-email">Email Address</label>
+                    </div>
+                    <div class="form-group float-label">
+                        <input type="password" id="login-password" class="form-input" placeholder=" " required>
+                        <label for="login-password">Password</label>
+                    </div>
+                    <!--Sing in button section-->
+                    <div class="error-message" id="login-error"></div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary"><a href="http://127.0.0.1:5500/index2.html">Sign In </a></button>
+                    </div>
+                    <div class="auth-footer">
+                        <p>Don't have an account? <span class="auth-link" onclick="showRegisterForm()">Register here</span></p>
+                        <p><a href="#" class="auth-link">Forgot password?</a></p>
+                    </div>
+                </form>
+                
+                <form id="register-form" class="auth-form">
+                    <div class="form-group float-label">
+                        <input type="text" id="register-name" class="form-input" placeholder=" " required>
+                        <label for="register-name">Full Name</label>
+                    </div>
+                    <div class="form-group float-label">
+                        <input type="email" id="register-email" class="form-input" placeholder=" " required>
+                        <label for="register-email">Email Address</label>
+                    </div>
+                    <div class="form-group float-label">
+                        <input type="password" id="register-password" class="form-input" placeholder=" " required>
+                        <label for="register-password">Password</label>
+                        <span class="password-toggle" id="register-toggle"></span>
+                    </div>
+                    <div class="form-group float-label">
+                        <input type="password" id="register-confirm-password" class="form-input" placeholder=" " required>
+                        <label for="register-confirm-password">Confirm Password</label>
+                    </div>
+                    <div class="error-message" id="register-error"></div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Create Account</button>
+                    </div>
+                    <div class="auth-footer">
+                        <p>Already have an account? <span class="auth-link" onclick="showLoginForm()">Sign in here</span></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // User storage and configurations
+        let users = JSON.parse(localStorage.getItem('authflowUsers')) || [];
+        const loginAttempts = {};
+        const MAX_LOGIN_ATTEMPTS = 3;
+        const LOGIN_LOCKOUT_TIME = 5 * 60 * 1000; // 5 minutes in ms
+        
+        // DOM Elements
+        const loginTab = document.getElementById('login-tab');
+        const registerTab = document.getElementById('register-tab');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const loginToggle = document.getElementById('login-toggle');
+        const registerToggle = document.getElementById('register-toggle');
+        
+        // Form validation patterns
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/;
+        
+        // Show login form
+        function showLoginForm() {
+            loginTab.classList.add('active');
+            registerTab.classList.remove('active');
+            loginForm.classList.add('active');
+            registerForm.classList.remove('active');
+            clearErrors();
+        }
+        
+        // Show register form
+        function showRegisterForm() {
+            loginTab.classList.remove('active');
+            registerTab.classList.add('active');
+            loginForm.classList.remove('active');
+            registerForm.classList.add('active');
+            clearErrors();
+        }
+        
+        // Toggle password visibility
+        function togglePasswordVisibility(fieldId, toggleId) {
+            const field = document.getElementById(fieldId);
+            const toggle = document.getElementById(toggleId);
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                toggle.textContent = '👁️';
+            } else {
+                field.type = 'password';
+                toggle.textContent = '👁️';
+            }
+        }
+        
+        // Clear all error messages
+        function clearErrors() {
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.style.display = 'none';
+                el.textContent = '';
+            });
+        }
+        
+        // Show error message
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+        
+        // Validate email format
+        function isValidEmail(email) {
+            return emailRegex.test(email);
+        }
+        
+        // Validate password strength
+        function isStrongPassword(password) {
+            return passwordRegex.test(password);
+        }
+        
+        // Event listeners
+        loginTab.addEventListener('click', showLoginForm);
+        registerTab.addEventListener('click', showRegisterForm);
+        
+        loginToggle.addEventListener('click', () => togglePasswordVisibility('login-password', 'login-toggle'));
+        registerToggle.addEventListener('click', () => togglePasswordVisibility('register-password', 'register-toggle'));
+        
+        // Login form submission
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            clearErrors();
+            
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+            const currentTime = Date.now();
+            
+            // Validation checks
+            if (!email) {
+                showError('login-error', 'Please enter your email address');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showError('login-error', 'Please enter a valid email address');
+                return;
+            }
+            
+            if (!password) {
+                showError('login-error', 'Please enter your password');
+                return;
+            }
+            
+            // Check for account lockout
+            if (loginAttempts[email] && 
+                loginAttempts[email].attempts >= MAX_LOGIN_ATTEMPTS &&
+                currentTime - loginAttempts[email].timestamp < LOGIN_LOCKOUT_TIME) {
+                
+                const minutesLeft = Math.ceil((LOGIN_LOCKOUT_TIME - (currentTime - loginAttempts[email].timestamp)) / 60000);
+                showError('login-error', `Account locked. Try again in ${minutesLeft} minute(s)`);
+                return;
+            }
+            
+            // Find user
+            const user = users.find(u => u.email === email);
+            
+            if (!user) {
+                showError('login-error', 'No account found with this email');
+                return;
+            }
+            
+            if (user.password !== password) {
+                // Track failed attempts
+                if (!loginAttempts[email]) {
+                    loginAttempts[email] = { attempts: 0, timestamp: 0 };
+                }
+                loginAttempts[email].attempts++;
+                loginAttempts[email].timestamp = currentTime;
+                
+                const attemptsLeft = MAX_LOGIN_ATTEMPTS - loginAttempts[email].attempts;
+                
+                if (attemptsLeft > 0) {
+                    showError('login-error', `Invalid password. ${attemptsLeft} attempt(s) remaining`);
+                } else {
+                    showError('login-error', `Too many failed attempts. Account locked for 5 minutes.`);
+                }
+                return;
+            }
+            
+            // Successful login
+            loginAttempts[email] = { attempts: 0, timestamp: 0 }; // Reset attempts
+            
+            // Simulate email sending
+            const loginAlert = `Login successful, ${user.name}! A confirmation email has been sent to ${email}`;
+            const redirectAlert = '\n\nRedirecting to dashboard...';
+            alert(loginAlert + redirectAlert);
+            
+            // In real app: window.location.href = '/dashboard';
+        });
+        
+        // Register form submission
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            clearErrors();
+            
+            const name = document.getElementById('register-name').value.trim();
+            const email = document.getElementById('register-email').value.trim();
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+            
+            // Validation checks
+            if (!name) {
+                showError('register-error', 'Please enter your full name');
+                return;
+            }
+            
+            if (!email) {
+                showError('register-error', 'Please enter your email address');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showError('register-error', 'Please enter a valid email address');
+                return;
+            }
+            
+            if (!password) {
+                showError('register-error', 'Please enter a password');
+                return;
+            }
+            
+            if (!isStrongPassword(password)) {
+                showError('register-error', 'Password must be at least 8 characters with letters and numbers');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showError('register-error', 'Passwords do not match');
+                return;
+            }
+            
+            // Store user data
+            users.push({
+                name,
+                email,
+                password,
+                createdAt: new Date().toISOString()
+            });
+            localStorage.setItem('authflowUsers', JSON.stringify(users));
+            
+            // Simulate email sending
+            alert(`Registration successful, ${name}! A verification email has been sent to ${email}`);
+            showLoginForm();
+        });
+        
+        // Function to simulate email sending
+        function sendLoginNotification(email, name) {
+            // In a real app, this would be an API call to your backend
+            console.log(`Sending login notification to ${email} for user ${name}`);
+            // Return a promise that would resolve when email is sent
+            return new Promise(resolve => setTimeout(resolve, 1000));
+        }
+        
+        // Initialize floating labels
+        document.querySelectorAll('.float-label input').forEach(input => {
+            input.addEventListener('focus', function() {
+                if (!this.value) {
+                    this.nextElementSibling.style.transform = 'translateY(-25px) scale(0.8)';
+                    this.nextElementSibling.style.background = 'white';
+                    this.nextElementSibling.style.padding = '0 5px';
+                    this.nextElementSibling.style.color = '#4facfe';
+                }
+            });
+            
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.nextElementSibling.style.transform = '';
+                    this.nextElementSibling.style.background = '';
+                    this.nextElementSibling.style.padding = '';
+                    this.nextElementSibling.style.color = '#6c757d';
+                }
+            });
+            
+            // Handle pre-filled values (if any)
+            if (input.value) {
+                input.nextElementSibling.style.transform = 'translateY(-25px) scale(0.8)';
+                input.nextElementSibling.style.background = 'white';
+                input.nextElementSibling.style.padding = '0 5px';
+                input.nextElementSibling.style.color = '#4facfe';
+            }
+        });
+    </script>
+</body>
+</html>
